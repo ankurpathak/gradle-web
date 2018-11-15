@@ -1,0 +1,49 @@
+buildscript {
+    ext{
+    }
+    repositories {
+        jcenter()
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.gretty:gretty:+"
+    }
+}
+
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: "org.gretty"
+ext{
+    javaVer = '11'
+    jodaTimeVer = '2.10.1'
+    servletApiVer = '4.0.1'
+}
+
+sourceCompatibility = "$javaVer"
+targetCompatibility = "$javaVer"
+
+repositories {
+    jcenter()
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile "joda-time:joda-time:$jodaTimeVer"
+    providedCompile "javax.servlet:javax.servlet-api:$servletApiVer"
+}
+
+configurations {
+    providedCompile.exclude group: 'javax.websocket', module: 'javax.websocket-api'
+}
+
+
+gretty {
+    // supported values:
+    // 'jetty7', 'jetty8', 'jetty9', 'jetty9.3', 'jetty9.4', 'tomcat7', 'tomcat8'
+      servletContainer = 'tomcat9'
+    //servletContainer = 'jetty9.4'
+}
+
