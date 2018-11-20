@@ -1,5 +1,6 @@
 buildscript {
     ext{
+        grettyVer = '3.0.0-SNAPSHOT'
     }
     repositories {
         jcenter()
@@ -7,18 +8,22 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath "org.gretty:gretty:+"
+        classpath "org.gretty:gretty:$grettyVer"
     }
 }
 
 
 apply plugin: 'java'
+apply plugin: 'maven'
 apply plugin: 'war'
 apply plugin: "org.gretty"
 ext{
     javaVer = '11'
     jodaTimeVer = '2.10.1'
     servletApiVer = '4.0.1'
+    jspApiVer = '2.3.3'
+    jstlApiVer = '1.2.2'
+    jstlVer = '1.2'
 }
 
 sourceCompatibility = "$javaVer"
@@ -33,6 +38,9 @@ repositories {
 dependencies {
     compile "joda-time:joda-time:$jodaTimeVer"
     providedCompile "javax.servlet:javax.servlet-api:$servletApiVer"
+    providedCompile "javax.servlet.jsp:javax.servlet.jsp-api:$jspApiVer"
+    compile "javax.servlet.jsp.jstl:javax.servlet.jsp.jstl-api:$jstlApiVer"
+    compile "javax.servlet:jstl:$jstlVer"
 }
 
 configurations {
@@ -41,9 +49,7 @@ configurations {
 
 
 gretty {
-    // supported values:
-    // 'jetty7', 'jetty8', 'jetty9', 'jetty9.3', 'jetty9.4', 'tomcat7', 'tomcat8'
-      servletContainer = 'tomcat9'
-    //servletContainer = 'jetty9.4'
+     //servletContainer = 'tomcat9'
+    servletContainer = 'jetty9.4'
 }
 
